@@ -1,0 +1,12 @@
+{
+  "name": "FoodMonger",
+  "displayName": "FoodMonger",
+  "expo": {
+    "name": "FoodMonger",
+    "slug": "FoodMonger",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
