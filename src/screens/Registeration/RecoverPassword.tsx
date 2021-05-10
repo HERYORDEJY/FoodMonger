@@ -22,7 +22,7 @@ export default function RecoverPassword(props: RecoverPasswordProps) {
   return (
     <NB.Container style={styles.container}>
       <RN.StatusBar
-        transcluscent={true}
+        translucent={true}
         barStyle={'dark-content'}
         backgroundColor={'transparent'}
       />
@@ -53,7 +53,6 @@ export default function RecoverPassword(props: RecoverPasswordProps) {
             <RN.View
               style={{
                 justifyContent: 'space-between',
-
                 flex: 1,
               }}
             >

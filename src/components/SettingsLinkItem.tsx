@@ -3,15 +3,18 @@ import * as RN from 'react-native';
 
 import { RFValue } from 'react-native-responsive-fontsize';
 import * as NB from 'native-base';
-import { SecondaryColor } from '../modules/colors';
+import { PrimaryColor, SecondaryColor } from '../modules/colors';
 import { DefinedStringSchema } from 'yup/lib/string';
 
 export interface SettingsLinkItemProps {
   title: string;
   iconName: string;
+  notification: boolean;
 }
 
-export interface SettingsLinkItemState {}
+export interface SettingsLinkItemState {
+  notification: boolean;
+}
 
 export default class SettingsLinkItem extends React.Component<
   SettingsLinkItemProps,
@@ -20,23 +23,49 @@ export default class SettingsLinkItem extends React.Component<
   constructor(props: SettingsLinkItemProps) {
     super(props);
 
-    this.state = {};
+    this.state = { notification: false };
   }
+
+  onToggleNotofiication = () =>
+    this.setState(() => {
+      return { ...this.state, notification: !this.state.notification };
+    });
+
+  onPress = () => this.onToggleNotofiication();
 
   public render() {
     return (
-      <RN.Pressable style={[styles.container]}>
+      <RN.Pressable style={[styles.container]} onPress={this.onPress}>
         <NB.Icon
           style={styles.leftIcon}
           name={this.props.iconName}
           type={'Feather'}
         />
         <RN.Text style={styles.title}>{this.props.title}</RN.Text>
-        <NB.Icon
-          style={styles.rightIcon}
-          name={'chevron-right'}
-          type={'Feather'}
-        />
+        {this.props.title.toLowerCase() !== 'log out' && (
+          <NB.Icon
+            style={[
+              styles.rightIcon,
+              {
+                // TODO Notifications toggle color not responding
+                color:
+                  this.props.title === 'notification'
+                    ? this.state.notification
+                      ? PrimaryColor
+                      : SecondaryColor
+                    : SecondaryColor,
+              },
+            ]}
+            name={
+              this.props.title.toLowerCase() === 'notification'
+                ? this.state.notification
+                  ? 'toggle-right'
+                  : 'toggle-left'
+                : 'chevron-right'
+            }
+            type={'Feather'}
+          />
+        )}
       </RN.Pressable>
     );
   }

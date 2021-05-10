@@ -29,7 +29,7 @@ export default function Settings(props: SettingsProps) {
         <SettingsLinkItem title={'Account Settings'} iconName={'user'} />
         <SettingsLinkItem title={'Favorite'} iconName={'heart'} />
         <SettingsLinkItem title={'Order History'} iconName={'clock'} />
-        <SettingsLinkItem title={'Notification'} iconName={'toggle-right'} />
+        <SettingsLinkItem title={'Notification'} iconName={'bell'} />
         <SettingsLinkItem title={'About the App'} iconName={'help-circle'} />
         <SettingsLinkItem title={'FAQ'} iconName={'info'} />
         <SettingsLinkItem title={'Rate Us'} iconName={'star'} />
@@ -43,6 +43,7 @@ const styles = RN.StyleSheet.create({
   container: {
     backgroundColor: '#FAFAFA',
     paddingHorizontal: RFValue(20),
+    paddingVertical: RFValue(20),
     flex: 1,
   },
   content: {},

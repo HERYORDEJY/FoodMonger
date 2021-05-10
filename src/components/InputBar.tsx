@@ -8,14 +8,13 @@ import { PrimaryColor, SecondaryColor } from '../modules/colors';
 
 export interface InputBarProps {
   placeholder: string;
-  placeholderTextColor: string;
-  keyboardType: string;
+  placeholderTextColor?: string;
+  keyboardType?: string;
   secureTextEntry?: boolean;
-  errors: any;
-  correct: any;
-  touched: boolean;
-  onChangeText: (e: string) => void;
-  onBlur: () => void;
+  errors?: any;
+  touched?: boolean;
+  onChangeText?: (e: string) => void;
+  onBlur?: () => void;
   value?: string;
   containerStyles?: {};
 }
@@ -69,6 +68,7 @@ export default class InputBar extends React.Component<
           >
             {this.props.placeholder}
           </RN.Text>
+          {/*  // TODO on touch not responding */}
           <RN.TextInput
             {...this.props}
             onBlur={this.props.onBlur}

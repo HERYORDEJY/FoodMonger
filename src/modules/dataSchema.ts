@@ -29,6 +29,20 @@ export const SignInDataSchema = Yup.object().shape({
     .required('**Required'),
 });
 
+export const AccountSettingsDataSchema = Yup.object().shape({
+  fullname: Yup.string().min(1, 'Minimum length of 1').required('**Required'),
+  email: Yup.string().email('Invalid Email').required('**Required'),
+  password: Yup.string()
+    .min(6, 'Minimum length of 8 characters')
+    .required('**Required'),
+  confirm_password: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+    .min(6, 'Minimum length of 8 characters')
+    .required('**Required'),
+  phoneNumber: Yup.string().matches(phoneRegExp, 'Phone number is not vaid'),
+  dateOfBirth: Yup.date().required(),
+});
+
 // export const CreditCardShema = Yup.object().shape({
 //   name: Yup.string().min(1, 'Minimum length of 1').required('**Required'),
 //   number: Yup.string()
@@ -63,6 +77,14 @@ export const resetPasswordInitialValues = {
 };
 export const signinInitialValues = {
   email: '',
+  password: '',
+};
+
+export const accountSettingsInitialValues = {
+  fullname: '',
+  email: '',
+  phoneNumber: '',
+  dateOfBirth: '',
   password: '',
 };
 
