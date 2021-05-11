@@ -12,6 +12,7 @@ import ResetPassword from './src/screens/Registeration/ResetPassword';
 import Settings from './src/screens/Settings/Settings';
 import AccountSettings from './src/screens/Settings/AccountSettings';
 import OrderHistory from './src/screens/Settings/OrderHistory';
+import FAQ from './src/screens/Settings/FAQ';
 
 let customFonts = {
   'Avenir-Regular': require('./src/assets/fonts/Avenir-Next-Font.ttf'),
@@ -49,7 +50,7 @@ export default class App extends React.Component {
 
   render() {
     if (this.state.fontsLoaded) {
-      return <OrderHistory />;
+      return <FAQ />;
     } else {
       return (
         <View

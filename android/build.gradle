@@ -19,6 +19,29 @@ buildscript {
     }
 }
 
+// subprojects { subproject ->
+//     afterEvaluate {
+//         if ((subproject.plugins.hasPlugin('android') || subproject.plugins.hasPlugin('android-library'))) {
+//             android {
+//                 compileSdkVersion 30
+
+//                buildToolsVersion "30.0.3"
+//             //    buildToolsVersion "30.0.3"<<< change here too
+
+//                 defaultConfig {
+//                     targetSdkVersion 30
+//                 }
+//                 variantFilter { variant ->
+//                     def names = variant.flavors*.name
+//                     if (names.contains("reactNative59")) {
+//                         setIgnore(true)
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+
 allprojects {
     repositories {
         mavenLocal()
