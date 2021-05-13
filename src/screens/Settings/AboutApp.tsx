@@ -33,10 +33,13 @@ export default function AboutApp(props: AboutAppProps) {
         </RN.View>
 
         <RN.Text style={styles.suggestion}>
-          Do you have any question aor suggestions?
+          Do you have any question or suggestions?
         </RN.Text>
-        <RN.Text style={styles.contactUs}>Contact Us</RN.Text>
-        <RN.Text style={styles.email}>support@foodmonger.com</RN.Text>
+        <RN.View style={styles.contactWrapper}>
+          <RN.Text style={styles.contactUs}>Contact Us</RN.Text>
+          <RN.Text style={styles.email}>support@foodmonger.com</RN.Text>
+        </RN.View>
+
         <RN.Text style={styles.socialMedia}>Social Media</RN.Text>
         <RN.View style={styles.mediaWrapper}>
           <RN.Pressable style={styles.iconWrapper}>
@@ -61,10 +64,11 @@ export default function AboutApp(props: AboutAppProps) {
 const styles = RN.StyleSheet.create({
   container: { paddingHorizontal: RFValue(20) },
   content: {},
-  contentContainerStyle: {},
-  appIconWrapper: { marginTop: RFValue(30) },
+  contentContainerStyle: { paddingHorizontal: RFValue(60) },
+  appIconWrapper: { marginTop: RFValue(30), alignItems: 'center' },
   version: {
     marginVertical: RFValue(20),
+    marginTop: RFValue(5),
     fontFamily: 'Avenir-Regular',
     fontSize: RFValue(12),
     color: SecondaryColor,
@@ -77,6 +81,7 @@ const styles = RN.StyleSheet.create({
     color: SecondaryColor,
     textAlign: 'center',
   },
+  contactWrapper: { marginVertical: RFValue(20) },
   contactUs: {
     fontFamily: 'Avenir-DemiBold',
     fontSize: RFValue(14),
@@ -104,10 +109,11 @@ const styles = RN.StyleSheet.create({
     textAlign: 'center',
   },
   mediaWrapper: {
-    marginVertical: RFValue(20),
+    marginBottom: RFValue(20),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
+    paddingHorizontal: RFValue(30),
   },
   iconWrapper: { marginHorizontal: RFValue(20) },
   icon: {},

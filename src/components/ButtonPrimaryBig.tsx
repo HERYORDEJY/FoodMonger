@@ -37,7 +37,7 @@ export default class ButtonPrimaryBig extends React.Component<
 const styles = RN.StyleSheet.create({
   container: {
     backgroundColor: PrimaryColor,
-    height: RFValue(56),
+    height: RFValue(56 - 8),
     borderRadius: RFValue(10),
     alignItems: 'center',
     justifyContent: 'center',
@@ -45,6 +45,6 @@ const styles = RN.StyleSheet.create({
   title: {
     fontFamily: 'Avenir-Medium',
     color: '#FFFFFF',
-    fontSize: RFValue(16),
+    fontSize: RFValue(14),
   },
 });

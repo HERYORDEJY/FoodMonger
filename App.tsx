@@ -13,6 +13,14 @@ import Settings from './src/screens/Settings/Settings';
 import AccountSettings from './src/screens/Settings/AccountSettings';
 import OrderHistory from './src/screens/Settings/OrderHistory';
 import FAQ from './src/screens/Settings/FAQ';
+import AboutApp from './src/screens/Settings/AboutApp';
+import Home from './src/screens/Home/Home';
+import FoodInfo from './src/screens/Home/FoodInfo';
+import Filter from './src/components/Filter';
+import MyCart from './src/screens/Cart/MyCart';
+import OrderSummary from './src/screens/Cart/OrderSummary';
+import CheckOut from './src/screens/Cart/CheckOut';
+import OrderSuccesful from './src/screens/Cart/OrderSuccesful';
 
 let customFonts = {
   'Avenir-Regular': require('./src/assets/fonts/Avenir-Next-Font.ttf'),
@@ -50,7 +58,7 @@ export default class App extends React.Component {
 
   render() {
     if (this.state.fontsLoaded) {
-      return <FAQ />;
+      return <OrderSuccesful />;
     } else {
       return (
         <View
