@@ -12,12 +12,13 @@ import { addOnData } from '../../api/datas';
 import ButtonPrimaryBig from '../../components/ButtonPrimaryBig';
 import { FavoriteActiveIcon } from '../../svg/FavoriteIcon';
 import Filter from '../../components/Filter';
+import ButtonPrimarySmall from '../../components/ButtonPrimarySmall';
 
 export interface FoodInfoProps {}
 
 export interface FoodInfoState {}
 
-export default function FoodInfo(props: FoodInfoProps) {
+export default function FoodInfo2(props: FoodInfoProps) {
   const renderPrice = () => (
     <RN.View>
       <RN.Text style={styles.priceHeader}>Price</RN.Text>
@@ -32,7 +33,7 @@ export default function FoodInfo(props: FoodInfoProps) {
         {/* <RN.Pressable style={styles.quantityButton}>
           <NB.Icon style={styles.minusIcon} name={'minus'} type={'Feather'} />
         </RN.Pressable> */}
-        <NavigationBar />
+
         <RN.View style={styles.quantityNumberWrapper}>
           <RN.Text style={styles.quantityNumber}>100</RN.Text>
         </RN.View>
@@ -52,20 +53,26 @@ export default function FoodInfo(props: FoodInfoProps) {
         barStyle={'dark-content'}
         backgroundColor={'transparent'}
       />
-      <RN.ImageBackground
-        source={require('../../assets/images/food-info-bg.png')}
-        style={styles.imageBackground}
-      >
-        {/* <NavigationBar /> */}
-        <RN.Pressable style={styles.navIconWrapper}>
-          {/* <ArrowIconLeft /> */}
-          <NB.Icon type={'Feather'} name={'chevron-left'} style={styles.icon} />
-        </RN.Pressable>
-      </RN.ImageBackground>
+      <RN.View style={styles.imageBackground}>
+        <RN.View style={styles.heroOverlay} />
+        <RN.View style={styles.navWrapper}>
+          <NavigationBar
+            rightComponent={
+              <RN.Pressable style={styles.favoriteWrapper}>
+                <FavoriteActiveIcon />
+              </RN.Pressable>
+            }
+          />
+        </RN.View>
+
+        <RN.View style={styles.heroImageWrapper}>
+          <RN.Image
+            source={require('../../assets/images/jollof-rice-big.png')}
+            style={styles.heroImage}
+          />
+        </RN.View>
+      </RN.View>
       <RN.View style={styles.wrapper}>
-        <RN.Pressable style={styles.favoriteWrapper}>
-          <FavoriteActiveIcon />
-        </RN.Pressable>
         <RN.ScrollView
           style={styles.content}
           contentContainerStyle={styles.contentContainerStyle}
@@ -89,10 +96,18 @@ export default function FoodInfo(props: FoodInfoProps) {
             </RN.View>
           </RN.View>
         </RN.ScrollView>
-        <ButtonPrimaryBig
-          title={'Add to Cart'}
-          containerStyles={styles.buttonPrimaryBig}
-        />
+        <RN.View style={styles.bottomWrapper}>
+          <RN.View style={styles.bottomPriceWrapper}>
+            <RN.Text style={styles.priceHeader}>Total Order</RN.Text>
+            <RN.Text style={styles.price}>
+              ₦<RN.Text style={styles.priceNumber}>3300</RN.Text>
+            </RN.Text>
+          </RN.View>
+          <ButtonPrimaryBig
+            title={'Add to Cart'}
+            containerStyles={styles.buttonPrimaryBig}
+          />
+        </RN.View>
       </RN.View>
     </NB.Container>
   );
@@ -107,23 +122,25 @@ const styles = RN.StyleSheet.create({
     // paddingBottom: RFValue(0),
     // marginBottom: RFValue(0),
     zIndex: 10000,
-    top: RFValue(-30),
+    // top: RFValue(-30),
     bottom: 0,
     height: 200,
     flex: 1,
     padding: RFValue(20),
   },
   contentContainerStyle: {
-    backgroundColor: ScreenBG,
+    // backgroundColor: '#FFFFFF',
     // top: RFValue(-30),
     zIndex: 10000,
+    paddingBottom: RFValue(20),
   },
   wrapper: {
     backgroundColor: ScreenBG,
     borderTopLeftRadius: RFValue(30),
     borderTopRightRadius: RFValue(30),
+
     // padding: RFValue(20),
-    zIndex: 10000,
+
     // paddingBottom: RFValue(30),
     height: '100%',
     flex: 1,
@@ -131,6 +148,38 @@ const styles = RN.StyleSheet.create({
   imageBackground: {
     width: '100%',
     height: RFValue(358 - 8),
+    zIndex: 10,
+    // borderBottomLeftRadius: RFValue(637),
+    // borderBottomRightRadius: RFValue(637),
+    backgroundColor: ScreenBG,
+    // borderBottomLeftRadius: RFValue(637 - 8),
+    // borderBottomRightRadius: RFValue(637 - 8),
+    // paddingHorizontal: RFValue(20),
+  },
+  heroOverlay: {
+    ...RN.StyleSheet.absoluteFillObject,
+    backgroundColor: '#FFECDC',
+    borderBottomLeftRadius: RFValue(637),
+    borderBottomRightRadius: RFValue(637),
+    height: RFValue(637),
+    width: RFValue(637),
+    top: RFValue(-637 / 2.2),
+    left: RFValue(-637 / 4),
+    zIndex: 10000,
+  },
+  heroImageWrapper: {
+    height: RFValue(274.35 - 8),
+    width: RFValue(356 - 8),
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 10000,
+  },
+  heroImage: {
+    flex: 1,
+    // height: null,
+    // width: null,
+    resizeMode: 'contain',
+    zIndex: 10000,
   },
   navIconWrapper: {
     backgroundColor: '#FFFFFF',
@@ -174,7 +223,7 @@ const styles = RN.StyleSheet.create({
   },
   priceNumber: {
     fontSize: RFValue(24),
-    color: PrimaryColor,
+    color: SecondaryColor,
     fontFamily: 'Avenir-DemiBold',
     marginBottom: RFValue(10),
   },
@@ -223,19 +272,33 @@ const styles = RN.StyleSheet.create({
   addOnSubwrapper: {
     padding: RFValue(10),
   },
-  buttonPrimaryBig: { margin: RFValue(20), marginTop: RFValue(0) },
+  buttonPrimaryBig: { flex: 0.6 },
   favoriteWrapper: {
     backgroundColor: '#FFFFFF',
     width: RFValue(56 - 8),
     height: RFValue(56 - 8),
-    borderRadius: RFValue(56),
+    borderRadius: RFValue(10),
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'absolute',
-    right: 0,
-    zIndex: 10000,
-    marginRight: RFValue(20),
-    top: RFValue(-50),
     elevation: RFValue(2),
+    zIndex: 10000000,
   },
+  navWrapper: {
+    paddingHorizontal: RFValue(20),
+    paddingTop: RFValue(30),
+    zIndex: 10000,
+  },
+  price: {
+    color: PrimaryColor,
+    fontSize: RFValue(16),
+    fontFamily: 'Avenir-Medium',
+  },
+  bottomWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: RFValue(10),
+    paddingHorizontal: RFValue(20),
+    backgroundColor: '#FFECDC',
+  },
+  bottomPriceWrapper: {},
 });

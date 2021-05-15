@@ -3,13 +3,27 @@ import * as RN from 'react-native';
 
 import { RFValue } from 'react-native-responsive-fontsize';
 import * as NB from 'native-base';
-import { PrimaryColor, SecondaryColor } from '../modules/colors';
+import * as RNPaper from 'react-native-paper';
+
+import { PrimaryColor, ScreenBG, SecondaryColor } from '../modules/colors';
 import { DefinedStringSchema } from 'yup/lib/string';
+import * as I from '../svg/SettingsIcon';
+
+const titleIcons = {
+  'Account Settings': <I.ProfileIcon />,
+  Favorite: <I.FavoriteIcon />,
+  'Order History': <I.HistoryIcon />,
+  Notification: <I.NotificationIcon />,
+  'About the App': <I.AboutIcon />,
+  FAQ: <I.InfoIcon />,
+  'Rate Us': <I.StarIcon />,
+  'Log Out': <I.PowerIcon />,
+};
 
 export interface SettingsLinkItemProps {
   title: string;
   iconName: string;
-  notification: boolean;
+  notification?: boolean;
 }
 
 export interface SettingsLinkItemState {
@@ -31,41 +45,69 @@ export default class SettingsLinkItem extends React.Component<
       return { ...this.state, notification: !this.state.notification };
     });
 
-  onPress = () => this.onToggleNotofiication();
+  // toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+
+  onPress = () => {};
 
   public render() {
+    const { title } = this.props;
+
     return (
-      <RN.Pressable style={[styles.container]} onPress={this.onPress}>
-        <NB.Icon
-          style={styles.leftIcon}
-          name={this.props.iconName}
-          type={'Feather'}
-        />
-        <RN.Text style={styles.title}>{this.props.title}</RN.Text>
-        {this.props.title.toLowerCase() !== 'log out' && (
-          <NB.Icon
+      <RN.Pressable
+        style={[styles.container]}
+        onPress={this.onPress}
+        disabled={this.props.title === 'notification'}
+      >
+        {titleIcons[`${title}`]}
+        <RN.Text
+          style={[
+            styles.title,
+            {
+              color:
+                this.props.title.toLowerCase() === 'log out'
+                  ? PrimaryColor
+                  : SecondaryColor,
+            },
+          ]}
+        >
+          {this.props.title}
+        </RN.Text>
+        {this.props.title.toLowerCase() === 'notification' ? (
+          <RN.View
             style={[
-              styles.rightIcon,
+              styles.switchWrapper,
               {
-                // TODO Notifications toggle color not responding
-                color:
-                  this.props.title === 'notification'
-                    ? this.state.notification
-                      ? PrimaryColor
-                      : SecondaryColor
-                    : SecondaryColor,
+                backgroundColor: this.state.notification
+                  ? PrimaryColor
+                  : '#BBB',
+                height: RFValue(24.42),
+                width: RFValue(45 - 4),
               },
             ]}
-            name={
-              this.props.title.toLowerCase() === 'notification'
-                ? this.state.notification
-                  ? 'toggle-right'
-                  : 'toggle-left'
-                : 'chevron-right'
-            }
-            type={'Feather'}
-          />
+          >
+            <RN.Switch
+              thumbColor={ScreenBG}
+              trackColor={{ true: PrimaryColor, false: '#BBB' }}
+              onValueChange={this.onToggleNotofiication}
+              value={this.state.notification}
+            />
+          </RN.View>
+        ) : (
+          this.props.title.toLowerCase() !== 'log out' && (
+            <NB.Icon
+              style={[
+                styles.rightIcon,
+                {
+                  // TODO Notifications toggle color not responding
+                  color: SecondaryColor,
+                },
+              ]}
+              name={'chevron-right'}
+              type={'Feather'}
+            />
+          )
         )}
+        {/* {this.props.title.toLowerCase() === 'notification' && <RN.Switch />} */}
       </RN.Pressable>
     );
   }
@@ -78,10 +120,11 @@ const styles = RN.StyleSheet.create({
     alignItems: 'center',
     padding: RFValue(10),
     backgroundColor: '#FFFFFF',
-    elevation: RFValue(2),
+    elevation: RFValue(1),
     height: RFValue(56),
     borderRadius: RFValue(10),
     marginVertical: RFValue(10),
+    margin: RFValue(1),
   },
   leftIcon: { color: SecondaryColor, fontSize: RFValue(20) },
   rightIcon: { color: SecondaryColor, fontSize: RFValue(20) },
@@ -92,5 +135,11 @@ const styles = RN.StyleSheet.create({
     flex: 1,
     textAlign: 'left',
     paddingLeft: RFValue(20),
+  },
+  switchWrapper: {
+    backgroundColor: '#BBB',
+    borderRadius: RFValue(200),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

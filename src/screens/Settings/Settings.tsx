@@ -4,7 +4,7 @@ import * as RN from 'react-native';
 import * as NB from 'native-base';
 import { RFValue } from 'react-native-responsive-fontsize';
 import NavigationBar from '../../components/NavigationBar';
-import { SecondaryColor } from '../../modules/colors';
+import { ScreenBG, SecondaryColor } from '../../modules/colors';
 import SettingsLinkItem from '../../components/SettingsLinkItem';
 
 export interface SettingsProps {}
@@ -14,11 +14,7 @@ export interface SettingsState {}
 export default function Settings(props: SettingsProps) {
   return (
     <NB.Container style={styles.container}>
-      <RN.StatusBar
-        translucent={true}
-        barStyle={'dark-content'}
-        backgroundColor={'transparent'}
-      />
+      <RN.StatusBar barStyle={'dark-content'} backgroundColor={ScreenBG} />
       <NavigationBar
         leftComponent={<RN.Text style={styles.screenTitle}>Settings</RN.Text>}
       />
@@ -41,9 +37,9 @@ export default function Settings(props: SettingsProps) {
 
 const styles = RN.StyleSheet.create({
   container: {
-    backgroundColor: '#FAFAFA',
+    backgroundColor: ScreenBG,
     paddingHorizontal: RFValue(20),
-    paddingVertical: RFValue(20),
+    // paddingVertical: RFValue(20),
     flex: 1,
   },
   content: {},
