@@ -105,6 +105,7 @@ const styles = RN.StyleSheet.create({
     // height: RFValue(137),
     // padding: RFValue(10),
   },
+  container: {},
   questionWrapper: { marginVertical: RFValue(10) },
   question: {
     color: PrimaryColor,

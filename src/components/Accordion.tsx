@@ -19,6 +19,8 @@ import { PrimaryColor, SecondaryColor } from '../modules/colors';
 interface AccordionViewProps {
   headerComponent?: React.ReactNode;
   contentComponent?: React.ReactNode;
+  arrowUpComponent?: React.ReactNode;
+  arrowDownComponent?: React.ReactNode;
   multipleSelect?: boolean;
   containerStyles?: {};
 }
@@ -62,11 +64,17 @@ export default class AccordionView extends Component<
           {this.props.headerComponent(
             this.state.collapsed ? SecondaryColor : PrimaryColor,
           )}
-          <NB.Icon
-            style={styles.arrow}
-            name={this.state.collapsed ? 'chevron-down' : 'chevron-up'}
-            type={'Feather'}
-          />
+          {!this.props.arrowDownComponent ? (
+            <NB.Icon
+              style={styles.arrow}
+              name={this.state.collapsed ? 'chevron-down' : 'chevron-up'}
+              type={'Feather'}
+            />
+          ) : this.state.collapsed ? (
+            this.props.arrowDownComponent
+          ) : (
+            this.props.arrowUpComponent
+          )}
         </Pressable>
         <Collapsible collapsed={this.state.collapsed} align='center'>
           {this.props.contentComponent}

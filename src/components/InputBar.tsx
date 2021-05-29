@@ -74,6 +74,9 @@ export default class InputBar extends React.Component<
             onBlur={this.props.onBlur}
             style={styles.input}
             secureTextEntry={!this.state.showPassword}
+            selectionColor={PrimaryColor}
+            spellCheck={false}
+            autoCorrect={false}
           />
         </RN.View>
         {placeholder.toLowerCase() === ('password' || 'confirm password') && (

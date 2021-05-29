@@ -27,6 +27,9 @@ export default class OrderSummaryPayment extends React.Component<
   onSelectCard = (type: 'cash' | 'card') =>
     this.setState(() => ({ ...this.state, type }));
 
+  cardNumberFocus = () =>
+    this.setState((prev) => ({ ...this.state, type: 'card' }));
+
   public render() {
     return (
       <RN.View style={[styles.container]}>
@@ -55,6 +58,8 @@ export default class OrderSummaryPayment extends React.Component<
                 placeholderTextColor={'#CCCCCC'}
                 style={[styles.textInput]}
                 autoFocus={this.state.type === 'card'}
+                // onFocus={this.cardNumberFocus}
+                onChange={this.cardNumberFocus}
               />
               <RN.View style={styles.textInputWrapper}>
                 <RN.TextInput
@@ -85,7 +90,7 @@ export default class OrderSummaryPayment extends React.Component<
 const styles = RN.StyleSheet.create({
   container: {
     // backgroundColor: '#FFFFFF'
-    marginBottom: RFValue(20),
+    marginBottom: RFValue(30),
   },
   header: {
     fontSize: RFValue(16),

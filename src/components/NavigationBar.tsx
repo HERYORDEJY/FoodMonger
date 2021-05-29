@@ -12,6 +12,8 @@ export interface Props {
   rightComponent?: React.ReactNode;
   leftOnPress?: () => void;
   rightOnPress?: () => void;
+  containerStyles?: RN.StyleProp<RN.ViewStyle>;
+  navigation?: any;
 }
 
 export interface State {}
@@ -23,7 +25,8 @@ const backArrowWrapper: {} = {
   backgroundColor: '#FFFFFF',
   alignItems: 'center',
   justifyContent: 'center',
-  elevation: RFValue(0.5),
+  elevation: RFValue(2),
+  margin: RFValue(0),
 };
 
 export default class NavigationBar extends React.Component<Props, State> {
@@ -34,8 +37,12 @@ export default class NavigationBar extends React.Component<Props, State> {
   }
 
   renderLeft = () => (
-    <RN.Pressable style={!this.props.leftComponent && backArrowWrapper}>
-      {/* // TODO  get the arrow icon from the Figma file */}
+    <RN.Pressable
+      disabled={this.props.leftComponent ? true : false}
+      onPress={this.props.leftOnPress}
+      style={!this.props.leftComponent && backArrowWrapper}
+    >
+      {/*  TODO  get the arrow icon from the Figma file */}
       {this.props.leftComponent ?? (
         <NB.Icon type={'Feather'} name={'chevron-left'} style={styles.icon} />
       )}
@@ -43,16 +50,20 @@ export default class NavigationBar extends React.Component<Props, State> {
   );
 
   renderBody = () => (
-    <RN.View>
+    <RN.View style={styles.bodyContainer}>
       <RN.Text style={styles.title}>{this.props.title}</RN.Text>
     </RN.View>
   );
 
-  renderRight = () => <RN.Pressable>{this.props.rightComponent}</RN.Pressable>;
+  renderRight = () => (
+    <RN.Pressable style={styles.rightContainer}>
+      {this.props.rightComponent}
+    </RN.Pressable>
+  );
 
   public render() {
     return (
-      <RN.View style={styles.container}>
+      <RN.View style={[styles.container, this.props.containerStyles]}>
         {!this.props.noLeft && this.renderLeft()}
         {this.renderBody()}
         {this.renderRight()}
@@ -69,13 +80,14 @@ const styles = RN.StyleSheet.create({
     paddingVertical: RFValue(10),
     height: RFValue(56 - 8),
   },
-  leftContainer: {},
-  bodyContainer: {},
-  rightContainer: {},
+  leftContainer: { flex: 0.3 },
+  bodyContainer: { alignItems: 'center', flex: 1 },
+  rightContainer: { flex: 0.3 },
   title: {
-    fontFamily: 'Avenir-Bold',
-    fontSize: RFValue(24),
+    fontFamily: 'Avenir-DemiBold',
+    fontSize: RFValue(20),
     color: SecondaryColor,
+    textAlign: 'center',
   },
   icon: {
     fontSize: RFValue(20),

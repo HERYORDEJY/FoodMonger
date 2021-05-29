@@ -31,3 +31,17 @@ export function CircleFillIcon(props) {
 `;
   return <SvgXml {...props} xml={xml} />;
 }
+
+export function CheckCircleIcon(props) {
+  const xml = `<svg width="87" height="87" viewBox="0 0 87 87" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle opacity="0.3" cx="43.5" cy="43.5" r="43.0857" fill="#FF9139" stroke="white" stroke-width="0.828571"/>
+<ellipse cx="43.4233" cy="43.2298" rx="33.4805" ry="33.2869" fill="#FF9139"/>
+<path d="M53.4634 36.4572L41.7469 50.5113L33.1429 42.9771" stroke="white" stroke-width="4.81816" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+
+
+
+`;
+  return <SvgXml {...props} xml={xml} />;
+}

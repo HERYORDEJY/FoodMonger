@@ -14,7 +14,7 @@ import {
 } from '../../api/datas';
 import { StringSchema } from 'yup';
 import { _screenWidth } from '../../modules/dimension';
-import { SecondaryColor } from '../../modules/colors';
+import { ScreenBG, SecondaryColor } from '../../modules/colors';
 import TopCategoryItem from '../../components/TopCategoryItem';
 import SpecialComboItem from '../../components/SpecialComboItem';
 
@@ -28,7 +28,6 @@ export default function Home(props: HomeProps) {
       contentContainerStyle={styles.renderAdvertsContainer}
       data={advertData}
       horizontal={true}
-      showsHorizontalScrollIndicator={false}
     >
       {advertData.map((advert: { id: string }, index) => (
         <RN.Pressable style={styles.advertItem} key={advert.id}>
@@ -70,7 +69,7 @@ export default function Home(props: HomeProps) {
 
   // TODO layout of 2 columns yet to be done
   const renderSpecialCombos = () => (
-    <RN.View style={styles.topCategoryWrapper}>
+    <RN.View style={styles.combosWrapper}>
       <RN.View style={styles.topCategoryHeaderWrapper}>
         <RN.Text style={styles.topCategoryTitle}>Special Combos</RN.Text>
         <RN.Pressable>
@@ -120,22 +119,26 @@ export default function Home(props: HomeProps) {
 
   return (
     <NB.Container style={styles.container}>
-      <RN.StatusBar barStyle={'dark-content'} backgroundColor={'#FFFFFF'} />
+      <RN.StatusBar barStyle={'dark-content'} backgroundColor={ScreenBG} />
       <RN.View style={styles.topWrapper}>
         <HomeHeaderBar />
         <HomeSearchBar />
       </RN.View>
 
-      <RN.FlatList ListHeaderComponent={renderHeader()} data={advertData} />
+      <RN.FlatList
+        ListHeaderComponent={renderHeader()}
+        data={advertData}
+        renderItem={() => {}}
+      />
     </NB.Container>
   );
 }
 
 const styles = RN.StyleSheet.create({
-  container: { paddingTop: RFValue(20) },
+  container: { paddingTop: RFValue(20), backgroundColor: ScreenBG },
   content: {},
   contentContainerStyle: {},
-  topWrapper: { paddingHorizontal: RFValue(20) },
+  topWrapper: { paddingHorizontal: RFValue(20), paddingTop: RFValue(0) },
   renderAdvertsContainer: {
     paddingHorizontal: RFValue(20),
     // paddingRight: RFValue(150),
@@ -145,10 +148,11 @@ const styles = RN.StyleSheet.create({
   advertItem: { marginRight: RFValue(10) },
   renderTopCategoryContainer: {
     paddingHorizontal: RFValue(20),
-    marginBottom: RFValue(20),
+    marginBottom: RFValue(40),
   },
   topCategoryItem: { marginRight: RFValue(10) },
   topCategoryWrapper: { marginTop: RFValue(40) },
+  combosWrapper: { marginBottom: RFValue(40) },
   topCategoryHeaderWrapper: {
     flexDirection: 'row',
     alignItems: 'center',

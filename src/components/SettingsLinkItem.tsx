@@ -24,6 +24,7 @@ export interface SettingsLinkItemProps {
   title: string;
   iconName: string;
   notification?: boolean;
+  onPress?: () => void;
 }
 
 export interface SettingsLinkItemState {
@@ -55,8 +56,9 @@ export default class SettingsLinkItem extends React.Component<
     return (
       <RN.Pressable
         style={[styles.container]}
-        onPress={this.onPress}
+        onPress={this.props.onPress}
         disabled={this.props.title === 'notification'}
+        android_ripple={{ color: ScreenBG, borderless: false }}
       >
         {titleIcons[`${title}`]}
         <RN.Text
@@ -123,7 +125,7 @@ const styles = RN.StyleSheet.create({
     elevation: RFValue(1),
     height: RFValue(56),
     borderRadius: RFValue(10),
-    marginVertical: RFValue(10),
+    marginBottom: RFValue(10),
     margin: RFValue(1),
   },
   leftIcon: { color: SecondaryColor, fontSize: RFValue(20) },

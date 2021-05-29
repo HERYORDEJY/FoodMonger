@@ -9,14 +9,14 @@ import { PaginationIcon } from '../svg/PaginationIcon';
 import { PrimaryColor, SecondaryColor } from '../modules/colors';
 
 export interface SwiperProps {
-  children: React.ReactNode;
-  data: object[];
-  autoplay: boolean;
-  autoplayDelay: number;
-  showPagination: boolean;
-  index: number;
-  contentContainerStyle: {};
-  horizontal: boolean;
+  children?: React.ReactNode;
+  data?: object[];
+  autoplay?: boolean;
+  autoplayDelay?: number;
+  showPagination?: boolean;
+  index?: number;
+  contentContainerStyle?: {};
+  horizontal?: boolean;
 }
 
 export interface SwiperState {
@@ -27,6 +27,7 @@ export default class SwiperBox extends React.Component<
   SwiperProps,
   SwiperState
 > {
+  private scrollRef: React.RefObject<unknown>;
   constructor(props: SwiperProps) {
     super(props);
 
@@ -43,24 +44,24 @@ export default class SwiperBox extends React.Component<
     this.setState({
       ...this.state,
       currentIndex: parseInt(
-        event.nativeEvent.contentOffset.x / RFValue(309 - 8),
+        String(event.nativeEvent.contentOffset.x / RFValue(309 - 8)),
         // event.nativeEvent.contentOffset.x / RN.Dimensions.get('window').width,
       ),
     });
 
-  handleClick = (number) => {
-    this.scrollRef.current.ScrollTo({
-      y: 100 * number,
-      animated: true,
-    });
-  };
+  // handleClick = (number) => {
+  //   this.scrollRef.current.ScrollTo({
+  //     y: 100 * number,
+  //     animated: true,
+  //   });
+  // };
 
-  renderPagination = (current) => (
+  renderPagination = () => (
     <RN.View style={styles.paginationWrapper}>
       {this.props.data.map((d, index) => (
         <PaginationIcon
           style={styles.icon}
-          fill={this.state.currentIndex === index ? PrimaryColor : '#EFEFEF'}
+          fill={this.state.currentIndex === index ? PrimaryColor : '#FEFEFE'}
           key={index.toString()}
         />
       ))}
@@ -72,10 +73,11 @@ export default class SwiperBox extends React.Component<
       <RN.View style={[styles.container]}>
         <RN.ScrollView
           {...this.props}
-          ref={this.scrollRef}
+          // ref={this.scrollRef}
           onScroll={(e) => this.handleOnScroll(e)}
           scrollEventThrottle={16}
           snapToInterval={RFValue(309 - 8) + 15}
+          showsHorizontalScrollIndicator={false}
           // autoplay
           // autoplayDelay={2}
           // autoplayLoop

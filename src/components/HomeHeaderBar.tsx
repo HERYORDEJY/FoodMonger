@@ -7,7 +7,7 @@ import * as NB from 'native-base';
 
 import { rfv } from '../modules/sizing';
 import { BellIcon } from '../svg/BellIcon';
-import { SecondaryColor } from '../modules/colors';
+import { ScreenBG, SecondaryColor } from '../modules/colors';
 
 export interface HomeHeaderBarProps {}
 
@@ -53,7 +53,7 @@ const styles = RN.StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: RFValue(20),
-    backgroundColor: '#FFFF',
+    backgroundColor: ScreenBG,
   },
   bioWrapper: {
     flexDirection: 'row',

@@ -6,16 +6,19 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import NavigationBar from '../../components/NavigationBar';
 import FAQItem from '../../components/FAQItem';
 import { ScreenBG } from '../../modules/colors';
+import { useNavigation } from '@react-navigation/native';
 
 export interface FAQProps {}
 
 export interface FAQState {}
 
 export default function FAQ(props: FAQProps) {
+  const navigation = useNavigation();
+
   return (
     <NB.Container style={styles.container}>
       <RN.StatusBar barStyle={'dark-content'} backgroundColor={ScreenBG} />
-      <NavigationBar title={'FAQ'} />
+      <NavigationBar title={'FAQ'} leftOnPress={() => navigation.goBack()} />
       <NB.Content
         style={styles.content}
         contentContainerStyle={styles.contentContainerStyle}
@@ -27,7 +30,7 @@ export default function FAQ(props: FAQProps) {
 }
 
 const styles = RN.StyleSheet.create({
-  container: { paddingHorizontal: RFValue(20) },
-  content: {},
+  container: { paddingHorizontal: RFValue(20), backgroundColor: ScreenBG },
+  content: { paddingTop: RFValue(20) },
   contentContainerStyle: {},
 });

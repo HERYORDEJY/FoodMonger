@@ -6,9 +6,21 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import OtpInputs from 'react-native-otp-inputs';
 
 import NavigationBar from '../../components/NavigationBar';
-import { ScreenBG, SecondaryColor } from '../../modules/colors';
+import {
+  GrayColor,
+  PrimaryColor,
+  ScreenBG,
+  SecondaryColor,
+} from '../../modules/colors';
 import ButtonPrimaryBig from '../../components/ButtonPrimaryBig';
-import OTPInput from '../../components/OTPInput';
+import OTPInputed from '../../components/OTPInput';
+
+import OTPInputView from '@twotalltotems/react-native-otp-input';
+//
+import { OTP } from 'react-native-otp-form';
+import OTPTextInput from 'react-native-otp-textinput';
+import PinInput from 'react-native-pin-entry';
+import OTPInput from 'react-native-otp-tgp';
 
 export interface OTPVerificationProps {}
 
@@ -16,6 +28,8 @@ export interface OTPVerificationState {}
 
 export default function OTPVerification(props: OTPVerificationProps) {
   const [otp, setOtp] = React.useState(null);
+
+  const otpInput = React.useRef(null);
 
   const getOtp = (otp) => {
     console.log(otp);
@@ -42,7 +56,32 @@ export default function OTPVerification(props: OTPVerificationProps) {
             handleChange={(code) => console.log(code)}
             numberOfInputs={4}
           /> */}
-          <OTPInput getOtp={(otp) => getOtp(otp)} />
+          <OTPInputed getOtp={(otp) => getOtp(otp)} />
+          {/* <OTP
+            codeCount={4}
+            containerStyle={{ marginTop: 50 }}
+            otpStyles={styles.roundedTextInput}
+          /> */}
+          {/* <OTPTextInput
+            ref={otpInput}
+            textInputStyle={{ borderWidth: 1, backgroundColor: 'red' }}
+            tintColor={PrimaryColor}
+            offTintColor={GrayColor}
+            containerStyle={styles.textInputContainer}
+            textInputStyle={styles.roundedTextInput}
+          /> */}
+          {/* <PinInput onInputChange={(pin) => console.log(pin)} /> */}
+          {/* <OTPInput
+            // value={otp}
+            // onChange={getOtp}
+            tintColor={PrimaryColor}
+            offTintColor='#BBBCBE'
+            otpLength={4}
+            cellStyle={{ flex: 1 }}
+          /> */}
+        </RN.View>
+        <RN.View style={styles.timerWrapper}>
+          <RN.Text style={styles.timerText}>Resend: 00:30</RN.Text>
         </RN.View>
       </NB.Content>
       <ButtonPrimaryBig
@@ -67,7 +106,9 @@ const styles = RN.StyleSheet.create({
     color: SecondaryColor,
     lineHeight: RFValue(20),
   },
-
+  otpWrapper: { marginHorizontal: RFValue(50), marginVertical: RFValue(0) },
+  timerWrapper: { alignItems: 'center' },
+  timerText: { fontSize: RFValue(14), color: '#444444' },
   // OTP styles starts here
 
   borderStyleBase: {
@@ -88,6 +129,19 @@ const styles = RN.StyleSheet.create({
 
   underlineStyleHighLighted: {
     borderColor: '#03DAC6',
+  },
+  textInputContainer: {
+    marginBottom: RFValue(20),
+  },
+  roundedTextInput: {
+    textAlign: 'center',
+    height: RFValue(42),
+    width: RFValue(42),
+    borderRadius: RFValue(10),
+    fontFamily: 'BROmega-SemiBold',
+    fontSize: RFValue(24),
+    color: SecondaryColor,
+    borderWidth: RFValue(1),
   },
 
   // OTP styles ends here

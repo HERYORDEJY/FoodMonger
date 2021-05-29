@@ -5,7 +5,12 @@ import * as NB from 'native-base';
 import { RFValue } from 'react-native-responsive-fontsize';
 import NavigationBar from '../../components/NavigationBar';
 import { ArrowIconLeft } from '../../svg/ArrowIcon';
-import { PrimaryColor, ScreenBG, SecondaryColor } from '../../modules/colors';
+import {
+  GrayColor,
+  PrimaryColor,
+  ScreenBG,
+  SecondaryColor,
+} from '../../modules/colors';
 import { CheckBoxActiveIcon } from '../../svg/CheckBoxIcon';
 import AddOnItem from '../../components/AddOnItem';
 import { addOnData } from '../../api/datas';
@@ -13,16 +18,45 @@ import ButtonPrimaryBig from '../../components/ButtonPrimaryBig';
 import { FavoriteActiveIcon } from '../../svg/FavoriteIcon';
 import Filter from '../../components/Filter';
 import ButtonPrimarySmall from '../../components/ButtonPrimarySmall';
-
-export interface FoodInfoProps {}
+import DialogueBox from '../../components/DialogueBox';
+import { useState } from 'react';
+import DeliverySuccessfulModal from '../../components/DeliverySuccessfulModal';
+export interface FoodInfoProps {
+  price: number;
+  quantity: number;
+  favorite: boolean;
+}
 
 export interface FoodInfoState {}
 
 export default function FoodInfo2(props: FoodInfoProps) {
+  const [foodInfo, setFoodInfo] = React.useState({ price: 2000, quantity: 0 });
+  const [confirmDialogueVisible, setConfirmDialogueVisible] = useState(false);
+  const [successfullDialogueVisible, setSuccessfulDialogueVisible] = useState(
+    false,
+  );
+
+  const [favorite, setFavorite] = useState(false);
+
+  const toggleFavorite = () => setFavorite(!favorite);
+
+  const plusQuantity = (addOn) => {
+    setFoodInfo({
+      ...foodInfo,
+      quantity: foodInfo.quantity + 1,
+    });
+  };
+
+  const minusQuantity = (addOn) =>
+    setFoodInfo({
+      ...foodInfo,
+      quantity: foodInfo.quantity - 1,
+    });
+
   const renderPrice = () => (
     <RN.View>
       <RN.Text style={styles.priceHeader}>Price</RN.Text>
-      <RN.Text style={styles.priceNumber}>₦2000</RN.Text>
+      <RN.Text style={styles.priceNumber}>₦{foodInfo.price}</RN.Text>
     </RN.View>
   );
 
@@ -30,18 +64,62 @@ export default function FoodInfo2(props: FoodInfoProps) {
     <RN.View>
       <RN.Text style={styles.quantityHeader}>Quantity</RN.Text>
       <RN.View style={styles.quantityButtonWrapper}>
-        {/* <RN.Pressable style={styles.quantityButton}>
+        <RN.Pressable
+          style={styles.quantityButton}
+          onPress={minusQuantity}
+          disabled={foodInfo.quantity > 0 ? false : true}
+        >
           <NB.Icon style={styles.minusIcon} name={'minus'} type={'Feather'} />
-        </RN.Pressable> */}
+        </RN.Pressable>
 
         <RN.View style={styles.quantityNumberWrapper}>
-          <RN.Text style={styles.quantityNumber}>100</RN.Text>
+          <RN.Text style={styles.quantityNumber}>{foodInfo.quantity}</RN.Text>
         </RN.View>
         <RN.Pressable
+          onPress={plusQuantity}
           style={[styles.quantityButton, { backgroundColor: PrimaryColor }]}
         >
           <NB.Icon style={styles.minusIcon} name={'plus'} type={'Feather'} />
         </RN.Pressable>
+      </RN.View>
+    </RN.View>
+  );
+
+  const showConfirmDialogue = () => setConfirmDialogueVisible(true);
+  const showSuccessfulDialogue = () => setSuccessfulDialogueVisible(true);
+  const hideConfirmDialogue = () => {
+    setConfirmDialogueVisible(false);
+    setSuccessfulDialogueVisible(true);
+  };
+
+  const renderConfirmDeliverTimeNotif = () => (
+    <RN.View style={{}}>
+      <RN.Text
+        style={{
+          fontSize: RFValue(14),
+          fontFamily: 'Avenir-DemiBold',
+          textAlign: 'center',
+          paddingHorizontal: RFValue(20),
+          color: SecondaryColor,
+        }}
+      >
+        When do you want the food to be delivered
+      </RN.Text>
+      <RN.View style={styles.confrimButtonWrapper}>
+        <ButtonPrimaryBig
+          title={'Later'}
+          titleStyles={{ color: PrimaryColor }}
+          containerStyles={{
+            backgroundColor: '#FFECDC',
+            flex: 1,
+            marginRight: RFValue(15),
+          }}
+        />
+        <ButtonPrimaryBig
+          title={'ASAP'}
+          containerStyles={{ flex: 1, marginLeft: RFValue(15) }}
+          onPress={hideConfirmDialogue}
+        />
       </RN.View>
     </RN.View>
   );
@@ -58,8 +136,13 @@ export default function FoodInfo2(props: FoodInfoProps) {
         <RN.View style={styles.navWrapper}>
           <NavigationBar
             rightComponent={
-              <RN.Pressable style={styles.favoriteWrapper}>
-                <FavoriteActiveIcon />
+              <RN.Pressable
+                style={styles.favoriteWrapper}
+                onPress={toggleFavorite}
+              >
+                <FavoriteActiveIcon
+                  fill={favorite ? PrimaryColor : GrayColor}
+                />
               </RN.Pressable>
             }
           />
@@ -106,9 +189,14 @@ export default function FoodInfo2(props: FoodInfoProps) {
           <ButtonPrimaryBig
             title={'Add to Cart'}
             containerStyles={styles.buttonPrimaryBig}
+            onPress={showConfirmDialogue}
           />
         </RN.View>
       </RN.View>
+      <DialogueBox visible={confirmDialogueVisible}>
+        {renderConfirmDeliverTimeNotif()}
+      </DialogueBox>
+      <DeliverySuccessfulModal visible={successfullDialogueVisible} />
     </NB.Container>
   );
 }
@@ -155,6 +243,7 @@ const styles = RN.StyleSheet.create({
     // borderBottomLeftRadius: RFValue(637 - 8),
     // borderBottomRightRadius: RFValue(637 - 8),
     // paddingHorizontal: RFValue(20),
+    alignItems: 'center',
   },
   heroOverlay: {
     ...RN.StyleSheet.absoluteFillObject,
@@ -166,6 +255,8 @@ const styles = RN.StyleSheet.create({
     top: RFValue(-637 / 2.2),
     left: RFValue(-637 / 4),
     zIndex: 10000,
+    alignItems: 'center',
+    alignSelf: 'center',
   },
   heroImageWrapper: {
     height: RFValue(274.35 - 8),
@@ -285,8 +376,10 @@ const styles = RN.StyleSheet.create({
   },
   navWrapper: {
     paddingHorizontal: RFValue(20),
-    paddingTop: RFValue(30),
+    // paddingTop: RFValue(30),
+    paddingTop: 30,
     zIndex: 10000,
+    width: '100%',
   },
   price: {
     color: PrimaryColor,
@@ -296,9 +389,16 @@ const styles = RN.StyleSheet.create({
   bottomWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     padding: RFValue(10),
     paddingHorizontal: RFValue(20),
     backgroundColor: '#FFECDC',
   },
   bottomPriceWrapper: {},
+  confrimButtonWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: RFValue(20),
+  },
 });

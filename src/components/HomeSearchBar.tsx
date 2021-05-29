@@ -6,7 +6,9 @@ import { PrimaryColor, SecondaryColor } from '../modules/colors';
 import { FilterIcon } from '../svg/FilterIcon';
 import { SearchIcon } from '../svg/SearchIcon';
 
-export interface HomeSearchBarProps {}
+export interface HomeSearchBarProps {
+  searchResult?: boolean;
+}
 
 export interface HomeSearchBarState {}
 
@@ -25,11 +27,14 @@ export default class HomeSearchBar extends React.Component<
       <RN.View style={[styles.container]}>
         {/* // TODO input shadow wrapper not complete */}
         <RN.View style={styles.inputWrapper}>
-          <SearchIcon />
+          {this.props.searchResult && <SearchIcon />}
           <RN.TextInput
             placeholder={'What do yo want to eat'}
             placeholderTextColor={SecondaryColor}
-            style={styles.textInput}
+            style={[
+              styles.textInput,
+              { marginLeft: this.props.searchResult ? RFValue(10) : 0 },
+            ]}
           />
         </RN.View>
         <RN.Pressable style={styles.iconWrapper}>

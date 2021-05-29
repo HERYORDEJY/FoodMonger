@@ -3,10 +3,16 @@ import * as RN from 'react-native';
 
 import { RFValue } from 'react-native-responsive-fontsize';
 import { PrimaryColor, SecondaryColor } from '../modules/colors';
+import { promoCodeData } from '../api/datas';
 
-export interface PromoCodeBarProps {}
+export interface PromoCodeBarProps {
+  onEnterCode: (e: string) => void;
+  onApplyCode: (e: string) => void;
+}
 
-export interface PromoCodeBarState {}
+export interface PromoCodeBarState {
+  code: string;
+}
 
 export default class PromoCodeBar extends React.Component<
   PromoCodeBarProps,
@@ -15,8 +21,18 @@ export default class PromoCodeBar extends React.Component<
   constructor(props: PromoCodeBarProps) {
     super(props);
 
-    this.state = {};
+    this.state = { code: null };
   }
+
+  // entering of code
+  onChangeText = (code: string) => {
+    this.props.onEnterCode(code);
+    this.setState((prevState) => {
+      return { code };
+    });
+  };
+  // apply code
+  onApply = () => this.props.onApplyCode(this.state.code);
 
   public render() {
     return (
@@ -26,9 +42,13 @@ export default class PromoCodeBar extends React.Component<
             placeholder={'Promo Code'}
             placeholderTextColor={'#CCCCCC'}
             style={styles.textInput}
+            onChangeText={(text) => this.props.onEnterCode(text)}
           />
         </RN.View>
-        <RN.Pressable style={styles.applyWrapper}>
+        <RN.Pressable
+          style={styles.applyWrapper}
+          onPress={this.props.onApplyCode}
+        >
           <RN.Text style={styles.apply}>Apply</RN.Text>
         </RN.Pressable>
       </RN.View>

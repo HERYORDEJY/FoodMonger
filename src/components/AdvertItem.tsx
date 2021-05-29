@@ -34,6 +34,8 @@ const styles = RN.StyleSheet.create({
     width: RFValue(309 - 8),
     height: RFValue(129 - 8),
     borderRadius: RFValue(10),
+    elevation: RFValue(2),
+    margin: RFValue(1),
   },
   image: { width: null, height: null, flex: 1 },
 });

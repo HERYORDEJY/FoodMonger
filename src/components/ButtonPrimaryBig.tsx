@@ -7,7 +7,10 @@ import { PrimaryColor } from '../modules/colors';
 export interface ButtonPrimaryBigProps {
   title: string;
   onPress?: () => void;
-  containerStyles?: {};
+  containerStyles?: RN.StyleProp<RN.ViewStyle>;
+  containerProps?: RN.ViewProps;
+  titleStyles?: RN.StyleProp<RN.TextStyle>;
+  titleProps?: RN.TextProps;
 }
 
 export interface ButtonPrimaryBigState {}
@@ -25,10 +28,13 @@ export default class ButtonPrimaryBig extends React.Component<
   public render() {
     return (
       <RN.Pressable
-        style={[styles.container, { ...this.props.containerStyles }]}
+        style={[styles.container, this.props.containerStyles]}
         onPress={this.props.onPress}
+        android_ripple={{ color: '#FFF' }}
       >
-        <RN.Text style={styles.title}>{this.props.title}</RN.Text>
+        <RN.Text style={[styles.title, this.props.titleStyles]}>
+          {this.props.title}
+        </RN.Text>
       </RN.Pressable>
     );
   }

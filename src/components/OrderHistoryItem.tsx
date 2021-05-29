@@ -68,15 +68,22 @@ export default class OrderHistoryItem extends React.Component<
 
 const styles = RN.StyleSheet.create({
   container: {
-    height: RFValue(90),
+    height: RFValue(90 - 8),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    backgroundColor: '#FFFFFF',
+    margin: RFValue(1),
+    marginBottom: RFValue(10),
+    borderRadius: RFValue(10),
+    paddingHorizontal: RFValue(10),
+    elevation: RFValue(2),
   },
+
   iconWrapper: {
     marginRight: RFValue(20),
-    height: RFValue(45),
-    width: RFValue(45),
+    height: RFValue(45 - 8),
+    width: RFValue(45 - 8),
     borderRadius: RFValue(10),
     alignItems: 'center',
     justifyContent: 'center',

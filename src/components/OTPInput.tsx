@@ -6,12 +6,28 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { PrimaryColor, SecondaryColor } from '../modules/colors';
 
 export default class OTPInputs extends React.Component {
-  state = { otp: [], value: null };
+  state = {
+    otp: [],
+    value: null,
+    current: 0,
+    currentInput: { index: 0, value: '' },
+  };
+  currentInput = {};
+
   otpTextInput = [];
 
   componentDidMount() {
     this.otpTextInput[0]._root.focus();
   }
+
+  onFocus = (current) =>
+    this.setState(() => ({ ...this.state, current: current }));
+
+  onChange = (index, value) =>
+    (this.currentInput = {
+      ...this.currentInput,
+      [index]: value.nativeEvent.text,
+    });
 
   renderInputs() {
     const inputs = Array(4).fill(0);
@@ -25,15 +41,20 @@ export default class OTPInputs extends React.Component {
               {
                 borderRadius: RFValue(10),
                 backgroundColor:
-                  this.state.value?.length > 0 ? PrimaryColor + 13 : '#FFFFFF',
+                  String(this.currentInput[j]) !== '' ||
+                  String(this.currentInput[j]).length > 0
+                    ? PrimaryColor + 13
+                    : '#FFFFFF',
                 borderColor:
-                  this.state.value?.length > 0 ? PrimaryColor : '#CCCCCC',
+                  this.state.current === j ? PrimaryColor : '#CCCCCC',
               },
             ]}
             keyboardType='numeric'
+            onChange={(v) => this.onChange(j, v)}
             onChangeText={(v) => this.focusNext(j, v)}
             onKeyPress={(e) => this.focusPrevious(e.nativeEvent.key, j)}
             ref={(ref) => (this.otpTextInput[j] = ref)}
+            onFocus={() => this.onFocus(j)}
           />
         </Item>
       </Col>
@@ -57,6 +78,14 @@ export default class OTPInputs extends React.Component {
     otp[index] = value;
     this.setState({ otp, value });
     this.props.getOtp(otp.join(''));
+    console.log(
+      'value: ',
+      value,
+      'index: ',
+      index,
+      'currentInput: ',
+      this.currentInput,
+    );
   }
 
   render() {

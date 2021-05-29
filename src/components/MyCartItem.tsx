@@ -9,14 +9,20 @@ import { ArrowCircleIcon } from '../svg/ArrowCircleIcon';
 import { PlusBoxIcon } from '../svg/PlusBoxIcon';
 
 export interface MyCartItemProps {
+  id: string;
   title: string;
   imageSource: any;
   price: string;
+  quantity: string | number;
   addition: string | number;
-  summary: boolean;
+  summary?: boolean;
+  onChangeQuantity: (string, string) => void;
 }
 
-export interface MyCartItemState {}
+export interface MyCartItemState {
+  price: number;
+  quantity: MyCartItemProps['quantity'];
+}
 
 export default class MyCartItem extends React.Component<
   MyCartItemProps,
@@ -25,8 +31,28 @@ export default class MyCartItem extends React.Component<
   constructor(props: MyCartItemProps) {
     super(props);
 
-    this.state = {};
+    this.state = { price: 2000, quantity: Number(this.props.quantity) };
   }
+
+  plusQuantity = (id) => {
+    this.setState((prevState, props) => {
+      this.props.onChangeQuantity(this.props.id, +prevState.quantity + 1);
+      return {
+        ...this.state,
+        quantity: +prevState.quantity + 1,
+      };
+    });
+  };
+
+  minusQuantity = (id) => {
+    this.setState((prevState, props) => {
+      this.props.onChangeQuantity(this.props.id, +prevState.quantity - 1);
+      return {
+        ...this.state,
+        quantity: +prevState.quantity - 1,
+      };
+    });
+  };
 
   public render() {
     return (
@@ -61,7 +87,14 @@ export default class MyCartItem extends React.Component<
               {/* Quantity select */}
               <RN.View style={styles.quantityButtonWrapper}>
                 <RN.Pressable
-                  disabled={this.props.summary}
+                  onPress={this.minusQuantity}
+                  disabled={
+                    this.props.summary
+                      ? true
+                      : +this.state.quantity > 0
+                      ? false
+                      : true
+                  }
                   style={[
                     styles.quantityButton,
                     {
@@ -78,9 +111,12 @@ export default class MyCartItem extends React.Component<
                   />
                 </RN.Pressable>
                 <RN.View style={styles.quantityNumberWrapper}>
-                  <RN.Text style={styles.quantityNumber}>100</RN.Text>
+                  <RN.Text style={styles.quantityNumber}>
+                    {+this.state.quantity}
+                  </RN.Text>
                 </RN.View>
                 <RN.Pressable
+                  onPress={this.plusQuantity}
                   disabled={this.props.summary}
                   style={[
                     styles.quantityButton,
@@ -110,7 +146,8 @@ const styles = RN.StyleSheet.create({
   container: {
     // width: RFValue(327 - 8),
     height: RFValue(115 - 8),
-    marginVertical: RFValue(5),
+    margin: RFValue(1),
+    marginBottom: RFValue(10),
     padding: RFValue(10),
     paddingHorizontal: RFValue(10),
     elevation: RFValue(2),
@@ -118,7 +155,6 @@ const styles = RN.StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#FFFFFF',
     borderRadius: RFValue(10),
-    margin: RFValue(1),
   },
   contentWrapper: {
     overflow: 'hidden',

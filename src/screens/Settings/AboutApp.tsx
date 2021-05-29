@@ -12,17 +12,23 @@ import {
   FacebookIcon,
   TwitterIcon,
 } from '../../svg/SocialIcons';
-import { SecondaryColor, PrimaryColor } from '../../modules/colors';
+import { SecondaryColor, PrimaryColor, ScreenBG } from '../../modules/colors';
+import { useNavigation } from '@react-navigation/native';
 
 export interface AboutAppProps {}
 
 export interface AboutAppState {}
 
 export default function AboutApp(props: AboutAppProps) {
+  const navigation = useNavigation();
+
   return (
     <NB.Container style={styles.container}>
-      <RN.StatusBar barStyle={'dark-content'} backgroundColor={'#ffffff'} />
-      <NavigationBar title={'About App'} />
+      <RN.StatusBar barStyle={'dark-content'} backgroundColor={ScreenBG} />
+      <NavigationBar
+        title={'About App'}
+        leftOnPress={() => navigation.goBack()}
+      />
       <NB.Content
         style={styles.content}
         contentContainerStyle={styles.contentContainerStyle}
@@ -62,7 +68,7 @@ export default function AboutApp(props: AboutAppProps) {
 }
 
 const styles = RN.StyleSheet.create({
-  container: { paddingHorizontal: RFValue(20) },
+  container: { paddingHorizontal: RFValue(20), backgroundColor: ScreenBG },
   content: {},
   contentContainerStyle: { paddingHorizontal: RFValue(60) },
   appIconWrapper: { marginTop: RFValue(30), alignItems: 'center' },

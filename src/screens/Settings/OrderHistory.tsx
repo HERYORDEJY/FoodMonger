@@ -6,56 +6,77 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import NavigationBar from '../../components/NavigationBar';
 import OrderHistoryItem from '../../components/OrderHistoryItem';
 import { CalendarIcon } from '../../svg/CalendarIcon';
-import { PrimaryColor, SecondaryColor } from '../../modules/colors';
+import { PrimaryColor, ScreenBG, SecondaryColor } from '../../modules/colors';
+import { useNavigation } from '@react-navigation/native';
 
 export interface OrderHistoryProps {}
 
 export interface OrderHistoryState {}
 
+// TODO ::  View order full details
+// TODO ::  Swipe order item to delete or other actions
+
 export default function OrderHistory(props: OrderHistoryProps) {
+  const navigation = useNavigation();
+
+  const renderEmptyHistory = () => (
+    <RN.View style={styles.emptyWrapper}>
+      <RN.View style={styles.iconWrapper}>
+        <CalendarIcon style={styles.icon} />
+      </RN.View>
+
+      <RN.View style={styles.descWrapper}>
+        <RN.Text style={styles.title}>No History Yet</RN.Text>
+        <RN.Text style={styles.subtitle}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisi arcu
+          ut aliquet et cursus.
+        </RN.Text>
+      </RN.View>
+    </RN.View>
+  );
+
+  const renderHistoryList = () => (
+    <RN.View style={styles.listWrapper}>
+      <OrderHistoryItem orderId={'1234567'} status={'Pending'} />
+      <OrderHistoryItem orderId={'1234567'} status={'Canceled'} />
+      <OrderHistoryItem orderId={'1234567'} status={'delivered'} />
+    </RN.View>
+  );
+
   return (
     <NB.Container style={styles.container}>
-      <RN.StatusBar
-        translucent={true}
-        barStyle={'dark-content'}
-        backgroundColor={'transparent'}
+      <RN.StatusBar barStyle={'dark-content'} backgroundColor={ScreenBG} />
+      <NavigationBar
+        title={'Order History'}
+        leftOnPress={() => navigation.goBack()}
       />
-      <NavigationBar title={'Order History'} />
       <NB.Content
         style={styles.content}
         contentContainerStyle={styles.contentContainerStyle}
       >
-        <RN.View style={styles.iconWrapper}>
-          <CalendarIcon style={styles.icon} />
-        </RN.View>
-
-        <RN.View style={styles.descWrapper}>
-          <RN.Text style={styles.title}>No History Yet</RN.Text>
-          <RN.Text style={styles.subtitle}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisi
-            arcu ut aliquet et cursus.
-          </RN.Text>
-        </RN.View>
+        {renderHistoryList()}
+        {/*{renderEmptyHistory()}*/}
       </NB.Content>
-      <OrderHistoryItem orderId={'1234567'} status={'Pending'} />
-      <OrderHistoryItem orderId={'1234567'} status={'Canceled'} />
-      <OrderHistoryItem orderId={'1234567'} status={'delivered'} />
     </NB.Container>
   );
 }
 
 const styles = RN.StyleSheet.create({
-  container: { padding: RFValue(20), paddingTop: RFValue(30) },
-  content: {},
+  container: {
+    paddingHorizontal: RFValue(20),
+    backgroundColor: ScreenBG,
+    flex: 1,
+  },
+  content: { paddingTop: RFValue(20) },
   contentContainerStyle: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
+    // justifyContent: 'center',
     flex: 1,
   },
   iconWrapper: {
     backgroundColor: PrimaryColor + '18',
-    width: RFValue(255),
-    height: RFValue(255),
+    width: RFValue(255 - 8),
+    height: RFValue(255 - 8),
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: RFValue(255 / 2),
@@ -80,4 +101,5 @@ const styles = RN.StyleSheet.create({
     letterSpacing: 1,
     lineHeight: 25,
   },
+  emptyWrapper: { marginTop: RFValue(30), alignItems: 'center' },
 });

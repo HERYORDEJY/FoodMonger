@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, StatusBar } from 'react-native';
 import * as Font from 'expo-font';
 
 import { setCustomText, setCustomTextInput } from 'react-native-global-props';
+import { Provider } from 'react-native-paper';
 
 import Login from './src/screens/Registeration/Login';
 import CreateAccount from './src/screens/Registeration/CreateAccount';
@@ -23,6 +24,10 @@ import OrderSummary from './src/screens/Cart/OrderSummary';
 import CheckOut from './src/screens/Cart/CheckOut';
 import OrderSuccesful from './src/screens/Cart/OrderSuccesful';
 import AccordionView from './src/components/Accordion';
+import Search from './src/screens/Home/Search';
+import Menu from './src/screens/Home/Menu';
+import AppIntroSliders from './src/screens/Onboarding/AppIntroSlider';
+import AppNavigation from './src/navigation';
 
 let customFonts = {
   'Avenir-Regular': require('./src/assets/fonts/Avenir-Next-Font.ttf'),
@@ -56,17 +61,18 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this._loadFontsAsync();
+    // this.loadAssets();
   }
 
   render() {
     if (this.state.fontsLoaded) {
-      return <FoodInfo2 />;
+      return <AppNavigation />;
     } else {
       return (
         <View
           style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         >
-          <Text style={{ fontFamily: 'Avenir-Regular' }}>
+          <Text style={{ fontFamily: 'Avenir-Regular' }} selectable={true}>
             Font still loading
           </Text>
         </View>

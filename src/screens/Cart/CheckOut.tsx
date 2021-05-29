@@ -8,16 +8,35 @@ import NavigationBar from '../../components/NavigationBar';
 import OrderSummaryPayment from '../../components/OrderSummaryPayment';
 import ButtonPrimaryBig from '../../components/ButtonPrimaryBig';
 import MyCartItem from '../../components/MyCartItem';
+import { useNavigation } from '@react-navigation/native';
+import { cartItemData } from '../../api/datas';
 
 export interface CheckOutProps {}
 
 export interface CheckOutState {}
 
+interface CartItemProps {
+  id: string;
+  title: string;
+  price: string;
+  discountPercent: string;
+  quantity: string;
+  addition: string;
+  imageSource: any;
+}
+
 export default function CheckOut(props: CheckOutProps) {
+  const navigation = useNavigation();
+
+  const subTotalPrice = () => {};
+
   return (
     <NB.Container style={styles.container}>
       <RN.StatusBar barStyle={'dark-content'} backgroundColor={ScreenBG} />
-      <NavigationBar title={'Check Out'} />
+      <NavigationBar
+        title={'Check Out'}
+        leftOnPress={() => navigation.goBack()}
+      />
       <NB.Content
         style={styles.content}
         contentContainerStyle={styles.contentContainerStyle}
@@ -41,20 +60,18 @@ export default function CheckOut(props: CheckOutProps) {
 
         <RN.View style={styles.orderList}>
           <RN.Text style={styles.deliveryAddressTitle}>Order Summary</RN.Text>
-          <MyCartItem
-            title={'Mixed with Chicken and Coke'}
-            price={'1234'}
-            addition={3}
-            imageSource={require('../../assets/images/pounded-yam.png')}
-            summary={true}
-          />
-          <MyCartItem
-            title={'Mixed with Chicken and Coke'}
-            price={'1234'}
-            addition={3}
-            imageSource={require('../../assets/images/pounded-yam.png')}
-            summary={true}
-          />
+          {cartItemData.map((item: CartItemProps, index) => (
+            <MyCartItem
+              key={item.id + index}
+              title={item.title}
+              price={item.price}
+              quantity={+item.quantity}
+              imageSource={item.imageSource}
+              addition={item.addition}
+              summary={true}
+              id={item.id}
+            />
+          ))}
         </RN.View>
       </NB.Content>
       <ButtonPrimaryBig
@@ -69,7 +86,10 @@ const styles = RN.StyleSheet.create({
   container: { backgroundColor: ScreenBG, paddingHorizontal: RFValue(20) },
   content: {},
   contentContainerStyle: {},
-  deliveryAddressWrapper: { marginVertical: RFValue(10) },
+  deliveryAddressWrapper: {
+    marginVertical: RFValue(10),
+    marginBottom: RFValue(20),
+  },
   deliveryAddressTitle: {
     fontSize: RFValue(16),
     color: '#999999',
@@ -85,7 +105,7 @@ const styles = RN.StyleSheet.create({
     backgroundColor: '#FFFFFF',
     elevation: RFValue(2),
     margin: RFValue(1),
-    marginBottom: RFValue(20),
+
     paddingHorizontal: RFValue(10),
   },
   plusWrapper: {
@@ -106,4 +126,5 @@ const styles = RN.StyleSheet.create({
     fontSize: RFValue(18),
     color: SecondaryColor,
   },
+  orderList: {},
 });

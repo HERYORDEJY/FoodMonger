@@ -10,7 +10,8 @@ export interface SpecialComboItemProps {
   title: string;
   imageSource: any;
   price: string;
-  potion: string;
+  potion?: string;
+  addition?: string;
 }
 
 export interface SpecialComboItemState {}
@@ -45,9 +46,16 @@ export default class SpecialComboItem extends React.Component<
           </RN.Text>
 
           <RN.View style={styles.last}>
-            <RN.Text style={[styles.potion]}>
-              {this.props.potion} Potion
-            </RN.Text>
+            {this.props.potion && (
+              <RN.Text style={[styles.potion]}>
+                {this.props.potion} Potion
+              </RN.Text>
+            )}
+            {this.props.addition && (
+              <RN.Text style={[styles.potion]}>
+                {this.props.potion} Potion
+              </RN.Text>
+            )}
             <RN.View style={styles.iconWrapper}>
               <PlusBoxIcon />
             </RN.View>
