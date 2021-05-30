@@ -7,7 +7,7 @@ import { PrimaryColor } from '../modules/colors';
 export interface ButtonPrimarySmallProps {
   title: string;
   onPress?: () => void;
-  containerStyles?: {};
+  containerStyles?: RN.StyleProp<RN.PressableProps>;
 }
 
 export interface ButtonPrimarySmallState {

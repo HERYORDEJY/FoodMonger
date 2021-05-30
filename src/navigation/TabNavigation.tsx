@@ -115,7 +115,10 @@ function MyTabBar({ state, descriptors, navigation }) {
 
 export function BottomTabNavigation() {
   return (
-    <BottomTab.Navigator tabBar={(props) => <MyTabBar {...props} />}>
+    <BottomTab.Navigator
+      initialRouteName={'Cart'}
+      tabBar={(props) => <MyTabBar {...props} />}
+    >
       <BottomTab.Screen name={'Home'} component={Home} />
       <BottomTab.Screen name={'Menu'} component={Menu} />
       <BottomTab.Screen name={'Cart'} component={MyCart} />

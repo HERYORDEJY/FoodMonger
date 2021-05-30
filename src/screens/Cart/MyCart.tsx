@@ -54,8 +54,27 @@ export default function MyCart(props: MyCartProps) {
     [],
   );
 
+  // render if promo code is invalid
+  const renderInvalidPromoCode = () =>
+    RN.Alert.alert(
+      'Sorry D;',
+      'The code you entered is invalid or has expired, please, check again',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        // { text: 'OK', onPress: () => console.log('OK Pressed') },
+      ],
+    );
+
   //Promo code state
-  const [promoCode, setPromoCode] = React.useState({ code: '', info: {} });
+  const [promoCode, setPromoCode] = React.useState({
+    code: '',
+    info: {},
+    valid: false,
+  });
 
   //on Enter promo code
   const onEnterPromoCode = (code: string) => {
@@ -65,12 +84,20 @@ export default function MyCart(props: MyCartProps) {
 
   //  Apply promo code
   const onApplyPromoCode = () => {
-    for (let code in promoCodeData) {
-      if (promoCodeData[code] === promoCode.code) {
+    for (const code in promoCodeData) {
+      if (promoCodeData[code].code === promoCode.code) {
         setPromoCode({
           ...promoCode,
-          info: code,
+          valid: true,
+          info: promoCodeData[code],
         });
+      } else {
+        setPromoCode({
+          code: '',
+          info: {},
+          valid: false,
+        });
+        // renderInvalidPromoCode();
       }
     }
   };

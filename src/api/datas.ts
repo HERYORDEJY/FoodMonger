@@ -263,7 +263,7 @@ export const cartItemData: {}[] = [
 ];
 
 export const promoCodeData: {}[] = [
+  { id: '003', title: '', code: 'ghi789', discountPercent: '9' },
   { id: '001', title: '', code: 'abc123', discountPercent: '10' },
-  { id: '002', title: '', code: 'efg456', discountPercent: '15' },
-  { id: '003', title: '', code: 'ijk789', discountPercent: '9' },
+  { id: '002', title: '', code: 'def456', discountPercent: '15' },
 ];

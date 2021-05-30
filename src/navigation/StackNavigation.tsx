@@ -14,7 +14,7 @@ const StackNavigator = createStackNavigator();
 
 export function StackNavigation() {
   return (
-    <StackNavigator.Navigator initialRouteName={'MyCart'} headerMode={null}>
+    <StackNavigator.Navigator initialRouteName={'CheckOut'} headerMode={null}>
       <StackNavigator.Screen name={'Home'} component={BottomTabNavigation} />
 
       {/*  Cart Stacks*/}
