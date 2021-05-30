@@ -10,6 +10,7 @@ import ButtonPrimaryBig from '../../components/ButtonPrimaryBig';
 import MyCartItem from '../../components/MyCartItem';
 import { useNavigation } from '@react-navigation/native';
 import { cartItemData } from '../../api/datas';
+import ButtonPrimarySmall from './../../components/ButtonPrimarySmall';
 
 export interface CheckOutProps {}
 
@@ -53,6 +54,25 @@ export default function CheckOut(props: CheckOutProps) {
             <RN.Text style={styles.enterAddressTitle}>
               Enter your address
             </RN.Text>
+          </RN.View>
+        </RN.View>
+
+        <RN.View style={styles.inputAddressWrapper}>
+          <RN.TextInput
+            placeholder={'Enter your address here'}
+            style={styles.addressInput}
+          />
+          <RN.View style={[styles.flexRow]}>
+            <ButtonPrimaryBig
+              containerStyles={styles.cancelButton}
+              titleStyles={styles.cancelText}
+              title={'Cancel'}
+            />
+            <ButtonPrimaryBig
+              containerStyles={styles.saveButton}
+              titleStyles={styles.saveText}
+              title={'Save'}
+            />
           </RN.View>
         </RN.View>
 
@@ -100,12 +120,11 @@ const styles = RN.StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: RFValue(76 - 8),
+    height: RFValue(64 - 8),
     borderRadius: RFValue(10),
     backgroundColor: '#FFFFFF',
     elevation: RFValue(2),
     margin: RFValue(1),
-
     paddingHorizontal: RFValue(10),
   },
   plusWrapper: {
@@ -127,4 +146,28 @@ const styles = RN.StyleSheet.create({
     color: SecondaryColor,
   },
   orderList: {},
+  flexRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  inputAddressWrapper: {
+    backgroundColor: '#FFF',
+    padding: RFValue(10),
+    borderRadius: RFValue(10),
+  },
+  cancelButton: {
+    backgroundColor: '#F2F2F2',
+    flex: 1,
+    marginRight: RFValue(30),
+  },
+  cancelText: { color: SecondaryColor },
+  saveButton: {
+    backgroundColor: PrimaryColor + 20,
+    flex: 1,
+    marginLeft: RFValue(30),
+  },
+  saveText: { color: PrimaryColor },
+  addressInputWrapper: { marginBottom: RFValue(10) },
+  addressInput: { fontSize: RFValue(16), marginBottom: RFValue(10) },
 });
